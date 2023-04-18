@@ -444,3 +444,12 @@ Enlace a Trello : https://trello.com/b/nfcBBPhT/desarrollo-ágil-practica-3
 Captura de pantalla incial de Trello.
 
 <img src='/Trelloinicial.png' width='800px'>
+
+Captura de pantalla de home de Fauna.
+<img src='/Faunahome.png' width='800px'>
+
+Captura de pantalla de base de datos de Fauna.
+<img src='/Fauna.png' width='800px'>
+
+Captura de pantalla de colección de Fauna.
+<img src='/Faunacoleccion.png' width='800px'>
