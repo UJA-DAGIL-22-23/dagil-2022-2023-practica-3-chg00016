@@ -453,3 +453,7 @@ Captura de pantalla de base de datos de Fauna.
 
 Captura de pantalla de colección de Fauna.
 <img src='/Faunacoleccion.png' width='800px'>
+
+Funcionalidad 01: Información del autor "Acerca de"
+<img src='/Trello1.png' width='800px'>
+<img src='/1Funcionalidad.png' width='800px'>
