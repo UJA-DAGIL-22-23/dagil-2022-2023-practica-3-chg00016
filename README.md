@@ -440,3 +440,6 @@ Además, incluye documentación sobre dicho código y un vídeo descriptivo de c
 
 
 Enlace a Trello : https://trello.com/b/nfcBBPhT/desarrollo-ágil-practica-3
+
+Captura de pantalla incial de Trello
+./Trelloinicial.png
