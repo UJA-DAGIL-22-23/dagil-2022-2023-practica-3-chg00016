@@ -47,5 +47,16 @@ router.get("/test_db", async (req, res) => {
 });
 
 
+/**
+ * Ruta de conexión de arqueros
+ */
+router.get("/get_arqueros", async (req, res) => {
+    try {
+        await callbacks.get_arqueros(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // Exporto el módulo para poder usarlo en server
 module.exports = router;
