@@ -8,12 +8,12 @@
 
 const ROUTES = [
     {
-        url: '/TiroconArco',
+        url: '/plantilla',
         proxy: {
             target: "http://localhost:8002",
             changeOrigin: true,
             pathRewrite: {
-                [`^/TiroconArco`]: '',
+                [`^/plantilla`]: '',
             },
         }
     }
