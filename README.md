@@ -454,6 +454,17 @@ Captura de pantalla de base de datos de Fauna.
 Captura de pantalla de colección de Fauna.
 <img src='/Faunacoleccion.png' width='800px'>
 
-Funcionalidad 01: Información del autor "Acerca de"
+### Funcionalidad 01: Información del autor "Acerca de"
+Trello después del incremento
 <img src='/Trello1.png' width='800px'>
+Captura del incremento
 <img src='/1Funcionalidad.png' width='800px'>
+
+
+### Funcionalidad 02: Listado de nombres de todos los jugadores
+Trello antes del incremento
+<img src='/Trelloincremento2.png' width='800px'>
+Trello después del incremento
+<img src='/Trelloincremento2final.png' width='800px'>
+Captura del incremento
+<img src='/Funcionalidad2.png' width='800px'>
