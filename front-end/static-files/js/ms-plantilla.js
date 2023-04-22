@@ -36,9 +36,9 @@ Plantilla.plantillaTags = {
     "APELLIDO": "### APELLIDO ###",
     "ID": "### ID ###",
     "NACIONALIDAD": "### NACIONALIDAD ###",
-    "EDAD": "### FECHA DE NACIMIENTO ###",
+    "EDAD": "### EDAD ###",
     "DISPARO": "### DISPARO ###",
-    "PUNTUACIONES_DE_LA_TANDA ": "### PUNTUACIONES DE LA TANDA ###"
+    "PUNTUACIONES_DE_LA_TANDA": "### PUNTUACIONES DE LA TANDA ###"
   
 }
 
@@ -145,12 +145,41 @@ Plantilla.plantillaTablaArqueros.cabeceraNombres = `<table width="100%" class="l
 </thead>
 <tbody>`;
 
-//Elementos RT que muestra los datos de un Arquero
+// Cabecera de la tabla para todos los datos
+Plantilla.plantillaTablaArqueros.cabeceraCompleta = `<table width="100%" class="listado_arqueros_completo">
+<thead>
+    <th >Id</th>
+    <th >Nombre</th>
+    <th >Apellido</th>
+    <th >Nacionalidad</th>
+    <th >Edad</th>
+    <th >Disparo</th>
+    <th >Puntuaciones de la Tanda</th>
+
+</thead>
+<tbody>`;
+
+//Elementos RT que muestra los nombre y apellido de un Arquero
 Plantilla.plantillaTablaArqueros.cuerpoNombres = `
 <tr title="${Plantilla.plantillaTags.NOMBRE}">
     
     <td>${Plantilla.plantillaTags.NOMBRE}</td>
     <td>${Plantilla.plantillaTags.APELLIDO}</td>
+    <td>
+    <div></div>
+</td>
+</tr>
+`;
+//Elementos RT que muestra los datos de un Arquero
+Plantilla.plantillaTablaArqueros.cuerpoCompleto = `
+<tr title="${Plantilla.plantillaTags.NOMBRE}">
+    <td>${Plantilla.plantillaTags.ID}</td>
+    <td>${Plantilla.plantillaTags.NOMBRE}</td>
+    <td>${Plantilla.plantillaTags.APELLIDO}</td>
+    <td>${Plantilla.plantillaTags.NACIONALIDAD}</td>
+    <td>${Plantilla.plantillaTags.EDAD}</td>
+    <td>${Plantilla.plantillaTags.DISPARO}</td>
+    <td>${Plantilla.plantillaTags["PUNTUACIONES_DE_LA_TANDA"]}</td>
     <td>
     <div></div>
 </td>
@@ -169,8 +198,14 @@ Plantilla.plantillaTablaArqueros.pie = `</tbody>
  */ 
 Plantilla.sustituyeTags = function (plantilla, arquero) {
     return plantilla
+        .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), arquero.data.id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), arquero.data.nombre)
         .replace(new RegExp(Plantilla.plantillaTags.APELLIDO, 'g'), arquero.data.apellido)
+        .replace(new RegExp(Plantilla.plantillaTags.NACIONALIDAD, 'g'), arquero.data.nacionalidad)
+        .replace(new RegExp(Plantilla.plantillaTags.EDAD, 'g'), arquero.data.edad)
+        .replace(new RegExp(Plantilla.plantillaTags.DISPARO, 'g'), arquero.data.disparo.tipo_de_arco +", "+arquero.data.disparo.distancia_de_tiro+", "+arquero.data.disparo.tipo_de_flecha)
+        .replace(new RegExp(Plantilla.plantillaTags["PUNTUACIONES_DE_LA_TANDA"], 'g'), arquero.data.puntuaciones_de_la_tanda)
+        
 }
 /**
  * Actualiza el cuerpo de la tabla con los datos del arquero que se le pasa
@@ -180,7 +215,14 @@ Plantilla.sustituyeTags = function (plantilla, arquero) {
 Plantilla.plantillaTablaArqueros.actualizaNombres = function (arquero) {
     return Plantilla.sustituyeTags(this.cuerpoNombres, arquero)
 }
-
+/**
+ * Actualiza el cuerpo de la tabla con los datos de el arquero que se le pasa
+ * @param {arquero} arquero Objeto con los datos de la persona que queremos escribir el TR
+ * @returns La plantilla des cuerpo de la tabla con los datos actualizados
+ */
+Plantilla.plantillaTablaArqueros.actualiza = function (arquero) {
+    return Plantilla.sustituyeTags(this.cuerpoCompleto, arquero)
+}
 
 
 /**
@@ -209,7 +251,32 @@ Plantilla.recupera = async function (callBackFn) {
         callBackFn(vectorArqueros.data)
     }
 }
+/**
+ * Función que recuperar todos los pilotos llamando al MS Plantilla
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
 
+Plantilla.recuperaCompleto = async function (callBackFn) {
+    let response = null
+
+    // Intento conectar con el microservicio 
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/get_arqueros_completos"
+        response = await fetch(url)
+
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+        //throw error
+    }
+
+    // Muestro todos los arqueros que se han descargado
+    let vectorArqueros = null
+    if (response) {
+        vectorArqueros  = await response.json()
+        callBackFn(vectorArqueros.data)
+    }
+}
 /**
  * Función para mostrar solo los nombre de todos los arqueros
  * que se recuperan de la BBDD
@@ -227,7 +294,22 @@ Plantilla.imprimeSoloNombres = function (vector) {
     Frontend.Article.actualizar("Plantilla del listado de los nombres de todos los arqueros", msj)
 }
 
+/**
+ * Función para mostrar solo los nombre de todos los arqueros
+ * que se recuperan de la BBDD
+ * @param {vector_de_arqueros} vector 
+ */
+Plantilla.imprimeCompleto = function (vector) {
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaTablaArqueros.cabeceraCompleta
+    if (vector && Array.isArray(vector)) {
+        vector.forEach(e => msj += Plantilla.plantillaTablaArqueros.actualiza(e));
+    }
+    msj += Plantilla.plantillaTablaArqueros.pie
 
+    // Borrar toda la información del Article y la sustituyo por la que ma interesa
+    Frontend.Article.actualizar("Plantilla del listado de todos los datos de todos los arqueros", msj)
+}
 /**
  * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
  */
@@ -235,4 +317,9 @@ Plantilla.procesarListaNombre = function () {
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
-
+/**
+ * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
+ */
+Plantilla.procesarListaEntera = function () {
+    Plantilla.recuperaCompleto(Plantilla.imprimeCompleto);
+}
