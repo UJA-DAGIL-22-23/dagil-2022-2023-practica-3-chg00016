@@ -40,11 +40,11 @@ describe('API Gateway: rutas estáticas', () => {
         .end((error) => { error ? done.fail(error) : done() })
     });
 
-      /**
+
+  /**
    * Tests para acceso a la lista de arqueros
    */
-    
-        it('Devuelve Listado de nombres de todos los jugadores', (done) => {
+        it('Devuelve Carmen, nombre de la primera arquera', (done) => {
           supertest(app)
             .get('/plantilla/get_arqueros')
             .expect(200)
@@ -63,29 +63,34 @@ describe('API Gateway: rutas estáticas', () => {
     
       
   })
-/**
+
+  /**
    * Tests para acceso a la lista de arqueros con todos los datos
    */
-     describe('Acceso a listado de arqueros:', () => {
-      it('Devuelve Listado de todos los datos de todos los jugadores', (done) => {
-        supertest(app)
-          .get('/get_arqueros_completos')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .expect(function (res) {
-            //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
-            assert(res.body.data[0].data.hasOwnProperty('nombre'));
-            assert(res.body.data[0].data.nombre === "Carmen");
-            assert(res.body.data[0].data.nombre != "Pepe");
-            
-          
-  
-          })
-          .end((error) => { error ? done.fail(error) : done(); }
-          );
-      });
-  
-    })
+
+  it('Devuelve todos los datos de todos los jugadores', (done) => {
+    supertest(app)
+      .get('/get_arqueros_completos')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(function (res) {
+        //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+        assert(res.body.data[0].data.hasOwnProperty('nombre'));
+        assert(res.body.data[0].data.hasOwnProperty('apellido'));
+        assert(res.body.data[0].data.hasOwnProperty('id'));
+        assert(res.body.data[0].data.hasOwnProperty('nacionalidad'));
+        assert(res.body.data[0].data.hasOwnProperty('edad'));
+        assert(res.body.data[0].data.hasOwnProperty('disparo'));
+        assert(res.body.data[0].data.hasOwnProperty('puntuaciones_de_la_tanda'));
+        assert(res.body.data.length === 10);
+        
+        
+      
+
+      })
+      .end((error) => { error ? done.fail(error) : done(); }
+      );
+  });
 
 });
 
