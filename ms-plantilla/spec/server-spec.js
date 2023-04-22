@@ -39,9 +39,9 @@ describe('Servidor PLANTILLA:', () => {
           //console.log( "BODY ACERCA DE ", res.body ); // Para comprobar qué contiene exactamente res.body
           assert(res.body.hasOwnProperty('mensaje'));
           assert(res.body.mensaje === "Microservicio MS Plantilla: acerca de");
-          assert(res.body.autor == "Carmen Huesa Guardiola");
-          assert(res.body.email == "chg00016@red.ujaen.es");
-          assert(res.body.fecha == "18-04-2023");
+          assert(res.body.autor === "Carmen Huesa Guardiola");
+          assert(res.body.email === "chg00016@red.ujaen.es");
+          assert(res.body.fecha === "18-04-2023");
 
         })
         .end((error) => { error ? done.fail(error) : done() })
@@ -74,14 +74,17 @@ describe('Servidor PLANTILLA:', () => {
    * Tests para acceso a la lista de arqueros
    */
     describe('Acceso a listado de arqueros:', () => {
-      it('Devuelve Listado de nombres de todos los jugadores mediante test_db', (done) => {
+      it('Devuelve Listado de nombres de todos los jugadores', (done) => {
         supertest(app)
           .get('/get_arqueros')
           .expect(200)
           .expect('Content-Type', /json/)
           .expect(function (res) {
             //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
-            assert(res.body.data.hasOwnProperty('nombre'));
+            assert(res.body.data[0].data.hasOwnProperty('nombre'));
+            assert(res.body.data[0].data.nombre === "Carmen");
+            assert(res.body.data[0].data.nombre != "Pepe");
+            
           
   
           })

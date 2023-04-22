@@ -94,13 +94,35 @@ const CB_OTHERS = {
             CORS(res).status(200).json({
                 mensaje: "Microservicio MS Plantilla: acerca de",
                 autor: "Carmen Huesa Guardiola",
-                email: "chg00015@red.ujaen.es",
+                email: "chg00016@red.ujaen.es",
                 fecha: "18-04-2023"
             });
         } catch (error) {
             CORS(res).status(500).json({ error: error.description })
         }
     },
+     /**
+     * Método para obtener todas los arqueros de la BBDD.
+     * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+     * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+     */
+     get_arqueros: async (req, res) => {
+        try {
+            let arqueros = await client.query(
+                q.Map(
+                    q.Paginate(q.Documents(q.Collection(COLLECTION))),
+                    q.Lambda("X", q.Get(q.Var("X")))
+                )
+            )
+            // console.log( arqueros ) // Para comprobar qué se ha devuelto en personas
+            CORS(res)
+                .status(200)
+                .json(arqueros)
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
+    },
+
 
 }
 
