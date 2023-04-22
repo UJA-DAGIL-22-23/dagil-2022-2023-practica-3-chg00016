@@ -121,8 +121,30 @@ describe("Plantilla.mostrarAcercaDe: ", function () {
             expect(elementoContenido.innerHTML.search(datosDescargadosPrueba.email) >= 0).toBeTrue()
             expect(elementoContenido.innerHTML.search(datosDescargadosPrueba.fecha) >= 0).toBeTrue()
         })
+    
 })
+describe("Plantilla.Ordena: ", function () {
+    it("ordena correctamente un vector",
+    function () {
+        vector = [
+            {data: {name: 'Yusepe'}},
+            {data: {name: 'Britney'}},
+            {data: {name: 'Antonio'}},
+            {data: {name: 'Ana'}},
+        ];
 
+        vectorOrdenado = [
+            {data: {name: 'Ana'}},
+            {data: {name: 'Antonio'}},
+            {data: {name: 'Britney'}},
+            {data: {name: 'Yusepe'}},
+        ];
+
+        Plantilla.Ordena(vector)
+        expect(vector).toEqual(vectorOrdenado)
+    })
+
+})
 
 /*
 IMPORTANTE

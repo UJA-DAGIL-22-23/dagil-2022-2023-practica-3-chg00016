@@ -322,6 +322,28 @@ Plantilla.imprimeOrdenados = function(vector) {
     Frontend.Article.actualizar("Plantilla del listado de los nombres de todos los arqueros ordenados", msj)
 }
 
+
+
+/**
+ * Función que imprime todos los datos de todos los jugadores que se recuperan de la BBDD ordenados alfabéticamente
+ * @param {vector_de_arqueros} vector 
+ */
+Plantilla.Ordena = function(vector) {
+
+    vector.sort(function(min, max) {
+        let nameMin = min.data.name.toUpperCase(); 
+        let nameMax = max.data.name.toUpperCase(); 
+        if (nameMin < nameMax) {
+            return -1;
+        }
+        if (nameMin > nameMax) {
+            return 1;
+        }
+        return 0;
+    });
+
+}
+
 /**
  * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
  */
