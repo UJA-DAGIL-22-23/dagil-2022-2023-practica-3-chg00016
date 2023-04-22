@@ -70,7 +70,7 @@ describe('Servidor PLANTILLA:', () => {
   })
 
 
-    /**
+  /**
    * Tests para acceso a la lista de arqueros
    */
     describe('Acceso a listado de arqueros:', () => {
@@ -93,6 +93,7 @@ describe('Servidor PLANTILLA:', () => {
       });
   
     })
+    
 });
 
 

@@ -63,7 +63,29 @@ describe('API Gateway: rutas estáticas', () => {
     
       
   })
-
+/**
+   * Tests para acceso a la lista de arqueros con todos los datos
+   */
+     describe('Acceso a listado de arqueros:', () => {
+      it('Devuelve Listado de todos los datos de todos los jugadores', (done) => {
+        supertest(app)
+          .get('/get_arqueros_completos')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(function (res) {
+            //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+            assert(res.body.data[0].data.hasOwnProperty('nombre'));
+            assert(res.body.data[0].data.nombre === "Carmen");
+            assert(res.body.data[0].data.nombre != "Pepe");
+            
+          
+  
+          })
+          .end((error) => { error ? done.fail(error) : done(); }
+          );
+      });
+  
+    })
 
 });
 

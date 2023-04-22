@@ -59,7 +59,7 @@ router.get("/get_arqueros", async (req, res) => {
 });
 
 /**
- * Ruta de conexión de arqueros
+ * Ruta de conexión de arqueros completos
  */
 router.get("/get_arqueros_completos", async (req, res) => {
     try {
