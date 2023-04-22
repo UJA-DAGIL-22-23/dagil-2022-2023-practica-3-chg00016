@@ -71,7 +71,7 @@ describe('Servidor PLANTILLA:', () => {
 
 
   /**
-   * Tests para acceso a la lista de arqueros
+   * Tests para acceso a la lista de nombres de arqueros
    */
     describe('Acceso a listado de nombres:', () => {
       it('Devuelve Carmen, nombre de la primera arquera', (done) => {
@@ -114,8 +114,32 @@ describe('Servidor PLANTILLA:', () => {
             assert(res.body.data[0].data.hasOwnProperty('edad'));
             assert(res.body.data[0].data.hasOwnProperty('disparo'));
             assert(res.body.data[0].data.hasOwnProperty('puntuaciones_de_la_tanda'));
-          
-            
+                   
+  
+          })
+          .end((error) => { error ? done.fail(error) : done(); }
+          );
+      });
+  
+    })
+
+     /**
+   * Tests para acceso a la lista de nombres ordenados de arqueros
+   */
+     describe('Acceso a listado de nombres ordenado:', () => {
+      it('Devuelve Ana, nombre de la primera arquera, y Yusepe nombre del último', (done) => {
+        supertest(app)
+          .get('/get_arqueros')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .expect(function (res) {
+            //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+            assert(res.body.data[0].data.hasOwnProperty('nombre'));
+            assert(res.body.data[0].data.nombre === "Ana");
+            assert(res.body.data[9].data.nombre === "Yusepe");
+
+            assert( res.body.data.length === 10); 
+      
           
   
           })

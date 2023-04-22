@@ -230,12 +230,12 @@ Plantilla.plantillaTablaArqueros.actualiza = function (arquero) {
  * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
  */
 
-Plantilla.recupera = async function (callBackFn) {
+Plantilla.recupera = async function (callBackFn, direccion) {
     let response = null
 
     // Intento conectar con el microservicio 
     try {
-        const url = Frontend.API_GATEWAY + "/plantilla/get_arqueros"
+        const url = Frontend.API_GATEWAY + direccion
         response = await fetch(url)
 
     } catch (error) {
@@ -251,32 +251,7 @@ Plantilla.recupera = async function (callBackFn) {
         callBackFn(vectorArqueros.data)
     }
 }
-/**
- * Función que recuperar todos los pilotos llamando al MS Plantilla
- * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
- */
 
-Plantilla.recuperaCompleto = async function (callBackFn) {
-    let response = null
-
-    // Intento conectar con el microservicio 
-    try {
-        const url = Frontend.API_GATEWAY + "/plantilla/get_arqueros_completos"
-        response = await fetch(url)
-
-    } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
-        console.error(error)
-        //throw error
-    }
-
-    // Muestro todos los arqueros que se han descargado
-    let vectorArqueros = null
-    if (response) {
-        vectorArqueros  = await response.json()
-        callBackFn(vectorArqueros.data)
-    }
-}
 /**
  * Función para mostrar solo los nombre de todos los arqueros
  * que se recuperan de la BBDD
@@ -314,12 +289,12 @@ Plantilla.imprimeCompleto = function (vector) {
  * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
  */
 Plantilla.procesarListaNombre = function () {
-    Plantilla.recupera(Plantilla.imprimeSoloNombres);
+    Plantilla.recupera(Plantilla.imprimeSoloNombres,"/plantilla/get_arqueros");
 }
 
 /**
  * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
  */
 Plantilla.procesarListaEntera = function () {
-    Plantilla.recuperaCompleto(Plantilla.imprimeCompleto);
+    Plantilla.recupera(Plantilla.imprimeCompleto,"/plantilla/get_arqueros_completos");
 }
