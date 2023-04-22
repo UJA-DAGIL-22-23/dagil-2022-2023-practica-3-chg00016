@@ -224,9 +224,17 @@ Plantilla.plantillaTablaArqueros.actualiza = function (arquero) {
     return Plantilla.sustituyeTags(this.cuerpoCompleto, arquero)
 }
 
+/**
+ * Actualiza el cuerpo de la tabla con los datos del arquero que se le pasa
+ * @param {arquero} arquero Objeto con los datos de la persona que queremos escribir el TR
+ * @returns La plantilla de cuerpo de la tabla con los datos actualizados
+ */
+Plantilla.plantillaTablaArqueros.actualizaNombresOrdenados = function (arquero) {
+    return Plantilla.sustituyeTags(this.cuerpoNombres, arquero)
+}
 
 /**
- * Función que recuperar todos los pilotos llamando al MS Plantilla
+ * Función que recuperar todos los arqueros llamando al MS Plantilla
  * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
  */
 
@@ -285,6 +293,35 @@ Plantilla.imprimeCompleto = function (vector) {
     // Borrar toda la información del Article y la sustituyo por la que ma interesa
     Frontend.Article.actualizar("Plantilla del listado de todos los datos de todos los arqueros", msj)
 }
+
+/**
+ * Función que imprime todos los datos de todos los jugadores que se recuperan de la BBDD ordenados alfabéticamente
+ * @param {vector_de_arqueros} vector 
+ */
+Plantilla.imprimeOrdenados = function(vector) {
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaTablaArqueros.cabeceraNombres
+    if (vector && Array.isArray(vector)) {
+        vector.sort(function(a, b) {
+            let nombreA = a.data.nombre.toUpperCase(); 
+            let nombreB = b.data.nombre.toUpperCase(); 
+            if (nombreA > nombreB) {
+                return 1;
+            }
+            if (nombreA < nombreB) {
+                return -1;
+            }
+            return 0;
+        });
+
+        vector.forEach(e => msj += Plantilla.plantillaTablaArqueros.actualizaNombresOrdenados(e));
+    }
+    msj += Plantilla.plantillaTablaArqueros.pie
+
+    // Borrar toda la información del Article y la sustituyo por la que ma interesa
+    Frontend.Article.actualizar("Plantilla del listado de los nombres de todos los arqueros ordenados", msj)
+}
+
 /**
  * Función principal para recuperar solo los nombres de los arqueros desde el MS, y posteriormente imprimirlos
  */
@@ -297,4 +334,11 @@ Plantilla.procesarListaNombre = function () {
  */
 Plantilla.procesarListaEntera = function () {
     Plantilla.recupera(Plantilla.imprimeCompleto,"/plantilla/get_arqueros_completos");
+}
+
+/**
+ * Funcion que lista los nombres de los arqueros ordenados alfabéticamente
+ */
+Plantilla.procesarListaNombreOrdenado = function() {
+    Plantilla.recupera(Plantilla.imprimeOrdenados,"/plantilla/get_arqueros");
 }
