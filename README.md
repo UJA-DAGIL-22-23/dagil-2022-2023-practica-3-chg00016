@@ -484,3 +484,27 @@ Trello después del incremento
 <img src='/Trelloincremento3final.png' width='800px'>
 Captura del incremento
 <img src='/Funcionalidad3.png' width='800px'>
+
+### Funcionalidad 11: Listado de todos los datos de jugadores que cumplen al menos con un criterio de búsqueda de un conjunto de ellos
+Trello antes del incremento
+<img src='/Trelloincremento11.png' width='800px'>
+Trello después del incremento
+<img src='/Trelloincremento11final.png' width='800px'>
+Captura del incremento
+<img src='/Funcionalidad11.png' width='800px'>
+
+### Funcionalidad 10: Listado de todos los datos de jugadores que cumplen simultáneamente con varios criterios de búsqueda
+Trello antes del incremento
+<img src='/Trelloincremento10.png' width='800px'>
+Trello después del incremento
+<img src='/Trelloincremento10final.png' width='800px'>
+Captura del incremento
+<img src='/Funcionalidad10.png' width='800px'>
+
+### Funcionalidad 08: Listado de todos los datos de jugadores cuyo nombre cumple con un criterio
+Trello antes del incremento
+<img src='/Trelloincremento6.png' width='800px'>
+Trello después del incremento
+<img src='/Trelloincremento6final.png' width='800px'>
+Captura del incremento
+<img src='/Funcionalidad6.png' width='800px'>
