@@ -268,22 +268,25 @@ Plantilla.recupera = async function (callBackFn, direccion) {
  * @param {string} criterio3 El tercer criterio que se busca
  * @param {funcion} callBackFn Función a la que se llamará una vez recibidos los datos
  */
-Plantilla.BuscaPorCriteriosTodos = async function (criterio1, criterio2, criterio3, callBackFn) {
+Plantilla.BuscaPorCriteriosTodos = async function (criterio1, criterio2, criterio3,tipo, callBackFn) {
     try {
         const url = Frontend.API_GATEWAY + "/plantilla/get_arqueros_completos"
         const response = await fetch(url);
         let vectorArqueros = null
         if (response) {
             vectorArqueros = await response.json()
-            const filtro = vectorArqueros.data.filter(arquero => arquero.data.apellido === criterio1 && arquero.data.nacionalidad === criterio2 && arquero.data.edad === parseInt(criterio3))
-            callBackFn(filtro)
+            if(tipo){
+                const filtro = vectorArqueros.data.filter(arquero => arquero.data.apellido === criterio1 && arquero.data.nacionalidad === criterio2 && arquero.data.edad === parseInt(criterio3))
+                callBackFn(filtro)    
+            }else{
+            const filtro = vectorArqueros.data.filter(arquero => arquero.data.apellido === criterio1 || arquero.data.nacionalidad === criterio2 || arquero.data.edad === parseInt(criterio3))
+            callBackFn(filtro)}
         }
     } catch (error) {
         alert("Error: No se han podido acceder al API Geteway")
         console.error(error)
     }
 }
-
 /**
  * Función para mostrar solo los nombre de todos los arqueros
  * que se recuperan de la BBDD
@@ -374,6 +377,6 @@ Plantilla.procesarListaNombreOrdenado = function() {
  * @param {string} aspecto2 El segundo criterio que se busca
  * @param {string} aspecto3 El tercer criterio que se busca
  */
-Plantilla.procesarListaCriteriosPrecisa = function (aspecto1, aspecto2, aspecto3) {
-    this.BuscaPorCriteriosTodos(aspecto1, aspecto2, aspecto3, this.imprimeCompleto); 
+Plantilla.procesarListaCriteriosPrecisa = function (aspecto1, aspecto2, aspecto3, tipo) {
+    this.BuscaPorCriteriosTodos(aspecto1, aspecto2, aspecto3,tipo, this.imprimeCompleto); 
 }
