@@ -287,6 +287,32 @@ Plantilla.BuscaPorCriteriosTodos = async function (criterio1, criterio2, criteri
         console.error(error)
     }
 }
+
+/**
+ * Función que recupera todos los arqueros llamando al MS Plantilla
+ * Posteriormente, llama a la función callBackFn para trabajar con los datos recperados.
+ * @param {string} nombreBuscado El nombre que se busca
+ * @param {funcion} callBackFn Función a la que se llamará una vez recibidos los datos
+ */
+Plantilla.BuscaPorNombre = async function (nombreBuscado, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/get_arqueros_completos"
+        const response = await fetch(url);
+        let vectorArqueros = null
+        if (response) {
+            vectorArqueros = await response.json()
+            
+                const filtro = vectorArqueros.data.filter(arquero => arquero.data.nombre === nombreBuscado)
+                callBackFn(filtro)    
+            
+
+        }
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Geteway")
+        console.error(error)
+    }
+}
+
 /**
  * Función para mostrar solo los nombre de todos los arqueros
  * que se recuperan de la BBDD
@@ -376,7 +402,16 @@ Plantilla.procesarListaNombreOrdenado = function() {
  * @param {string} aspecto1 El primer criterio que se busca
  * @param {string} aspecto2 El segundo criterio que se busca
  * @param {string} aspecto3 El tercer criterio que se busca
+ * @param {bool} tipo Tipo de busqueda a realizar
  */
 Plantilla.procesarListaCriteriosPrecisa = function (aspecto1, aspecto2, aspecto3, tipo) {
     this.BuscaPorCriteriosTodos(aspecto1, aspecto2, aspecto3,tipo, this.imprimeCompleto); 
+}
+
+/**
+ * Función que muestra los arqueros con los criterios indicados exactamente
+ * @param {string} nombre El nombre que se busca
+ */
+Plantilla.procesarListaBusquedaNombre = function (nombre) {
+    this.BuscaPorNombre(nombre, this.imprimeCompleto); 
 }
