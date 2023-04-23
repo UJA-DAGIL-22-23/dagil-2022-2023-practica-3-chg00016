@@ -123,27 +123,39 @@ describe("Plantilla.mostrarAcercaDe: ", function () {
         })
     
 })
-describe("Plantilla.Ordena: ", function () {
-    it("ordena correctamente un vector",
-    function () {
-        vector = [
-            {data: {name: 'Yusepe'}},
-            {data: {name: 'Britney'}},
-            {data: {name: 'Antonio'}},
-            {data: {name: 'Ana'}},
-        ];
 
-        vectorOrdenado = [
-            {data: {name: 'Ana'}},
-            {data: {name: 'Antonio'}},
-            {data: {name: 'Britney'}},
-            {data: {name: 'Yusepe'}},
-        ];
-
-        Plantilla.Ordena(vector)
-        expect(vector).toEqual(vectorOrdenado)
+describe("Plantilla.imprimeOrdenados: ", function() {
+    it("Mostrar datos nulos cuando le pasamos vector nulo", 
+        function() {
+            Plantilla.imprimeOrdenados([])
+            expect(elementoTitulo.innerHTML).toBe("Plantilla del listado de los nombres de todos los arqueros ordenados")
+            expect(elementoContenido.querySelector('tbody').innerHTML).toBe('')
     })
+})
 
+describe("Plantilla.imprimeCompleto: ", function() {
+    it("Mostrar datos nulos cuando le pasamos un valor que no es un objeto",
+    function() {
+        Plantilla.imprimeCompleto(10)
+        expect(elementoTitulo.innerHTML).toBe("Plantilla del listado de todos los datos de todos los arqueros")
+        expect(elementoContenido.querySelector('tbody').innerHTML).toBe('')
+})
+})
+
+
+describe("Plantilla.imprimeSoloNombres: ", function() {
+    it("Mostrar datos nulos cuando le pasamos un valor que no es un objeto",
+    function() {
+        Plantilla.imprimeSoloNombres(10)
+        expect(elementoTitulo.innerHTML).toBe("Plantilla del listado de los nombres de todos los arqueros")
+        expect(elementoContenido.querySelector('tbody').innerHTML).toBe('')
+})
+    it("Mostrar datos nulos cuando le pasamos vector nulo", 
+    function() {
+    Plantilla.imprimeSoloNombres([])
+    expect(elementoTitulo.innerHTML).toBe("Plantilla del listado de los nombres de todos los arqueros")
+    expect(elementoContenido.querySelector('tbody').innerHTML).toBe('')
+})
 })
 
 /*
