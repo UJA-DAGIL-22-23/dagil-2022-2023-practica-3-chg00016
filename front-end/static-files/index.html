@@ -32,8 +32,10 @@
             title="Muestra los nombres de los arqueros ordenados de la base de datos">Lista de nombres ordenada</a>
             <a href="javascript:Plantilla.procesarListaEntera()" class="opcion-principal"
             title="Muestra todos los datos de los arqueros de la base de datos">Lista de arqueros</a>
-            <a href="javascript:Plantilla.procesarListaCriteriosPrecisa()" class="opcion-principal"
-            title="Muestra todos los datos de los arqueros de la base de datos que cumplen con todos los criterios de busqueda">Lista criterios de búsqueda</a>
+            <input type="text" placeholder="Apellido" id="criterio-1">
+            <input type="text" placeholder="Nacionalidad" id="criterio-2">
+            <input type="text" placeholder="Edad" id="criterio-3">
+            <button class="btn" onclick="Plantilla.procesarListaCriteriosPrecisa(document.getElementById('criterio-1').value, document.getElementById('criterio-2').value, document.getElementById('criterio-3').value, true)">Buscar por criterios</button>
     </nav>
 
     <!-- 
